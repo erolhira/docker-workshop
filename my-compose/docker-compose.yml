@@ -11,6 +11,8 @@ services:
     ports:
       - "8060:8060"
   my-rest-api:
+    depends_on:
+      - my-redis
     build:
       context: ../my-rest-api
       dockerfile: Dockerfile
@@ -18,3 +20,7 @@ services:
       - /home/erol/tmp/logs:/logs
     environment:
       - API_VERSION=v5
+      - REDIS_HOST=my-redis
+      - REDIS_PORT=6379
+  my-redis:
+    image: redis
