@@ -1,0 +1,20 @@
+version: '3'
+services:
+  nginx:
+    #if nginx crash; restart it always
+    restart: always
+    depends_on:
+      - my-rest-api
+    build:
+      context: ../my-nginx
+      dockerfile: Dockerfile
+    ports:
+      - "8060:8060"
+  my-rest-api:
+    build:
+      context: ../my-rest-api
+      dockerfile: Dockerfile
+    volumes:
+      - /home/erol/tmp/logs:/logs
+    environment:
+      - API_VERSION=v5
